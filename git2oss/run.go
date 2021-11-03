@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/bitwormhole/starter/application"
 	"github.com/bitwormhole/starter/io/fs"
 	"github.com/bitwormhole/starter/lang"
 )
 
-func Run() error {
+func Run(mod application.Module) error {
 
-	fmt.Println("Git >>>>> OSS")
+	fmt.Println("Git >>>>> OSS (" + mod.GetVersion() + ")")
 
 	ctx := &Context{}
 
