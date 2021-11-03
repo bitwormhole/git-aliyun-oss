@@ -1,4 +1,4 @@
-package git2oss
+package push2oss
 
 import (
 	"bytes"
@@ -14,11 +14,14 @@ import (
 	"github.com/bitwormhole/starter/util"
 )
 
+// 这些是配置在 [.git/config] 文件里的参数
 const (
-	ConfigOSSBucket        = "oss.{{id}}.bucket"
-	ConfigOSSEndpoint      = "oss.{{id}}.endpoint"
-	ConfigOSSAccessKeyID   = "oss.{{id}}.accesskeyid"
-	ConfigOSSAccessKeyFile = "oss.{{id}}.accesskeyfile" // AccessKeySecret 的内容保存在keyfile中
+	ConfigOSSBucket        = "push2oss.{{id}}.bucket"
+	ConfigOSSEndpoint      = "push2oss.{{id}}.endpoint"
+	ConfigOSSAccessKeyID   = "push2oss.{{id}}.accesskeyid"
+	ConfigOSSAccessKeyFile = "push2oss.{{id}}.accesskeyfile" // AccessKeySecret 的内容保存在keyfile中
+	ConfigOSSLocalRoot     = "push2oss.{{id}}.localroot"
+	ConfigOSSRemoteRoot    = "push2oss.{{id}}.remoteroot"
 )
 
 type OSSBucketParams struct {
@@ -26,6 +29,8 @@ type OSSBucketParams struct {
 	AccessKeyID     string
 	AccessKeySecret string
 	Bucket          string
+	LocalRoot       string
+	RemoteRoot      string
 }
 
 type OSSService interface {
@@ -67,6 +72,8 @@ func (inst *OSSServiceImpl) loadOSSConfig() error {
 	ctx.BucketParams.Bucket = inst.getConfigValue(id, ConfigOSSBucket, errs)
 	ctx.BucketParams.Endpoint = inst.getConfigValue(id, ConfigOSSEndpoint, errs)
 	ctx.BucketParams.AccessKeyID = inst.getConfigValue(id, ConfigOSSAccessKeyID, errs)
+	ctx.BucketParams.RemoteRoot = inst.getConfigValue(id, ConfigOSSRemoteRoot, nil)
+	ctx.BucketParams.LocalRoot = inst.getConfigValue(id, ConfigOSSLocalRoot, nil)
 	err := errs.LastError()
 	if err != nil {
 		return err
@@ -88,6 +95,9 @@ func (inst *OSSServiceImpl) getConfigValue(id string, field string, ec lang.Erro
 	props := inst.Context.GitConfigProps
 	value, err := props.GetPropertyRequired(key)
 	if err != nil {
+		if ec == nil {
+			return ""
+		}
 		ec.Append(err)
 		return ""
 	}

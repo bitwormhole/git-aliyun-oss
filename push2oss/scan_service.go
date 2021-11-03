@@ -1,7 +1,8 @@
-package git2oss
+package push2oss
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/bitwormhole/starter/io/fs"
 )
@@ -17,8 +18,12 @@ type ScanServiceImpl struct {
 }
 
 func (inst *ScanServiceImpl) Scan(h ScanHandlerFn) error {
+	params := &inst.Context.BucketParams
 	dir := inst.Context.GitWorkingDir
-	return inst.scanDir(dir, "", 0, h)
+	if params.LocalRoot != "" {
+		dir = dir.GetHref(params.LocalRoot)
+	}
+	return inst.scanDir(dir, params.RemoteRoot, 0, h)
 }
 
 func (inst *ScanServiceImpl) scanDir(dir fs.Path, spath string, depth int, h ScanHandlerFn) error {
@@ -35,14 +40,16 @@ func (inst *ScanServiceImpl) scanDir(dir fs.Path, spath string, depth int, h Sca
 		return nil // skip
 	}
 
+	if len(spath) > 0 {
+		if !strings.HasSuffix(spath, "/") {
+			spath = spath + "/"
+		}
+	}
+
 	list := dir.ListItems()
 
 	for _, item := range list {
-		sep := ""
-		if depth > 0 {
-			sep = "/"
-		}
-		path2 := spath + sep + item.Name()
+		path2 := spath + item.Name()
 		if item.IsDir() {
 			err := inst.scanDir(item, path2, depth+1, h)
 			if err != nil {

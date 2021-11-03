@@ -1,4 +1,4 @@
-package git2oss
+package push2oss
 
 import (
 	"fmt"

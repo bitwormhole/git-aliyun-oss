@@ -1,4 +1,4 @@
-module github.com/bitwormhole/git-aliyun-oss
+module github.com/bitwormhole/git-push2oss
 
 go 1.16
 
