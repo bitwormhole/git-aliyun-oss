@@ -1,0 +1,9 @@
+github.com/aliyun/aliyun-oss-go-sdk v1.9.8 h1:BOflvK0Zs/zGmoabyFIzTg5c3kguktWTXEwewwbuba0=
+github.com/aliyun/aliyun-oss-go-sdk v1.9.8/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
+github.com/bitwormhole/starter v0.0.64/go.mod h1:3/UtKB8VwcmR5xf8mx4V7vgGLaej89LaoT+KuJKWL60=
+github.com/bitwormhole/starter v0.0.72 h1:vasb6D7DmVWAevHyYZmIWS8QV57f9IIg6Q2dnhg5aIE=
+github.com/bitwormhole/starter v0.0.72/go.mod h1:3/UtKB8VwcmR5xf8mx4V7vgGLaej89LaoT+KuJKWL60=
+github.com/bitwormhole/starter-cli v0.0.5 h1:LZM7ehQOpK48fy8wIBDY7L1OjP+/itGO9NODROyWDKc=
+github.com/bitwormhole/starter-cli v0.0.5/go.mod h1:+yYL/09NmlemloZeT2tmzBzq/ap7wtPWdPeyPSOPxkY=
+golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac h1:7zkz7BUtwNFFqcowJ+RIgu2MaV/MapERkDIy+mwPyjs=
+golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
